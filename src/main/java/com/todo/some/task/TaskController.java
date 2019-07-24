@@ -1,6 +1,5 @@
 package com.todo.some.task;
 
-import com.todo.some.exeptions.NotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,47 +10,40 @@ import java.util.List;
 public class TaskController {
 
     private int counter = 1;
-    private List<Task> tasks = new ArrayList<Task>() {{
-        add(generateTask());
-        add(generateTask());
-        add(generateTask());
-    }};
+    private List<Task> tasks = new ArrayList<>();
 
-    private Task generateTask() {
-        Task a = new Task();
-        a.setId(counter++);
-        a.setParentId(1);
-        a.changeIsDone(false);
-        a.changeName("message" + (counter - 1));
-        return a;
+    @GetMapping("{parentId}")
+    public List<Task> getTasksByListId(@PathVariable int parentId) {
+        List<Task> ts = new ArrayList<>();
+
+        for (int i = 0; i < tasks.size(); i++) {
+            if (this.tasks.get(i).getParentId() == parentId) {
+                ts.add(this.tasks.get(i));
+            }
+        }
+        return ts;
     }
 
-    @GetMapping("{id}")
-    public Task getTaskById(@PathVariable int id) {
-        System.out.println(id);
-        System.out.println(this.tasks.get(0).getId());
-        return this.tasks.stream()
-                .filter(t -> t.getId() == id)
-                .findFirst()
-                .orElseThrow(NotFoundException :: new);
+    @DeleteMapping("{id}")
+    public void deleteTask(@PathVariable int id) {
+        for (int i = 0; i < this.tasks.size(); i++) {
+            if (this.tasks.get(i).getId() == id) {
+                this.tasks.remove(this.tasks.get(i));
+            }
+        }
     }
 
-    @DeleteMapping("{task}")
-    public void deleteTask(@PathVariable Task task) {
-        this.tasks.remove(task);
-    }
-
-    @PostMapping("{task}")
-    public Task createTask(@PathVariable Task task) {
+    @PostMapping
+    public Task createTask(@RequestBody Task task) {
         task.setId(counter++);
         tasks.add(task);
         return task;
     }
 
-    @PutMapping("{task}")
-    public void putTask (@PathVariable Task task) {
+    @PutMapping("{id}")
+    public void putTask (@PathVariable int id, @RequestBody Task task) {
         for (int i = 0; i < this.tasks.size(); i++) {
-            if (this.tasks.get(i).getId() == task.getId()) {
+            if (this.tasks.get(i).getId() == id) {
                 this.tasks.set(i, task);
                 break;
             }
