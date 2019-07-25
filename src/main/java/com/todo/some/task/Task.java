@@ -1,9 +1,21 @@
 package com.todo.some.task;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "task")
 public class Task {
+    @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private int id;
+
+    @Column
     private int parentId;
-    private String name = "";
+
+    @Column
+    private String name;
+
+    @Column
     private Boolean isDone;
 
     public void changeName(String newName) {
@@ -33,10 +45,5 @@ public class Task {
     public int getId() {
         return this.id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
 
 }

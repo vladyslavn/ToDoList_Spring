@@ -9,7 +9,6 @@ import java.util.List;
 @RequestMapping ("tasks")
 public class TaskController {
 
-    private int counter = 1;
     private List<Task> tasks = new ArrayList<>();
 
     @GetMapping("{parentId}")
@@ -35,7 +34,6 @@ public class TaskController {
 
     @PostMapping
     public Task createTask(@RequestBody Task task) {
-        task.setId(counter++);
         tasks.add(task);
         return task;
     }

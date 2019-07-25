@@ -1,7 +1,16 @@
 package com.todo.some.list;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "lists")
 public class ListOfTask {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column
     private String name;
 
     public void setId(int id) {
