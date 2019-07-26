@@ -9,32 +9,31 @@ import java.util.List;
 @RequestMapping ("tasks")
 public class TaskController {
 
-    private final TaskRepository taskRepository;
+    private final TaskService taskService;
 
     @Autowired
-    public TaskController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
-
-    @GetMapping("{parentId}")
-    public List<Task> getTasksByListId(@PathVariable int parentId) {
-        return taskRepository.findByParentId(parentId);
+    @GetMapping("{listId}")
+    public List<TaskDto> getTasksByListId(@PathVariable int listId) {
+        return this.taskService.getTasksDtoByListId(listId);
     }
 
     @DeleteMapping("{id}")
     public void deleteTask(@PathVariable int id) {
-        taskRepository.deleteById(id);
+        this.taskService.deleteTaskById(id);
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        taskRepository.save(task);
-        return task;
+    public TaskDto createTask(@RequestBody TaskDto taskDto) {
+        taskDto = this.taskService.createTask(taskDto);
+        return taskDto;
     }
 
     @PutMapping
-    public void putTask(@RequestBody Task task) {
-        taskRepository.save(task);
+    public void putTask(@RequestBody TaskDto taskDto) {
+        this.taskService.updateTask(taskDto);
     }
 }
