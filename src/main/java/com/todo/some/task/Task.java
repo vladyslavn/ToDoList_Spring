@@ -16,34 +16,39 @@ public class Task {
     private String name;
 
     @Column
-    private Boolean isDone;
+    private Boolean done;
 
-    public void changeName(String newName) {
-        this.name = newName;
+
+    public int getId() {
+        return id;
     }
 
-    public void changeIsDone(Boolean newIsDone) {
-        this.isDone = newIsDone;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public Boolean getIsDone() {
-        return this.isDone;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getParentId() {
-        return this.parentId;
+        return parentId;
     }
 
     public void setParentId(int parentId) {
         this.parentId = parentId;
     }
 
-    public int getId() {
-        return this.id;
+    public String getName() {
+        return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public Boolean getDone() {
+        return done;
+    }
+
+    public void setDone(Boolean done) {
+        this.done = done;
+    }
 }

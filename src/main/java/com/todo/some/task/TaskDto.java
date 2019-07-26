@@ -5,7 +5,7 @@ public class TaskDto {
     private int id;
     private int listId;
     private String name;
-    private boolean isDone;
+    private boolean done;
 
     public int getId() {
         return id;
@@ -32,10 +32,10 @@ public class TaskDto {
     }
 
     public boolean isDone() {
-        return isDone;
+        return done;
     }
 
     public void setDone(boolean done) {
-        isDone = done;
+        this.done = done;
     }
 }

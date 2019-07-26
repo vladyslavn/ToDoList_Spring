@@ -12,5 +12,21 @@ public class TaskService {
         this.listRepository = listRepository;
     }
 
+    private Task fromTaskDtoToTask(TaskDto taskDto) {
+        Task task = new Task();
+        task.setId(taskDto.getId());
+        task.setParentId(taskDto.getListId());
+        task.setName(taskDto.getName());
+        task.setDone(taskDto.isDone());
+        return task;
+    }
 
+    private TaskDto fromTaskToTaskDto(Task task) {
+        TaskDto taskDto = new TaskDto();
+        taskDto.setId(task.getId());
+        taskDto.setListId(task.getParentId());
+        taskDto.setName(task.getName());
+        taskDto.setDone(task.getDone());
+        return taskDto;
+    }
 }
