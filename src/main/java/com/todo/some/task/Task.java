@@ -12,7 +12,7 @@ public class Task {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "list")
+    @JoinColumn(name = "listId")
     private ListOfTask list;
 
     @Column
