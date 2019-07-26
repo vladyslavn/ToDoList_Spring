@@ -19,16 +19,14 @@ public class TaskService {
     }
 
     public List<TaskDto> getTasksDtoByListId(int listId) {
-        ListOfTask list = listRepository.findById(listId)
-                .orElse(new ListOfTask());
-        return this.taskRepository.findByList(list)
+        return this.taskRepository.findByListId(listId)
                 .stream()
                 .map(this :: fromTaskToTaskDto)
                 .collect(Collectors.toList());
     }
 
     public void deleteTaskById(int id) {
-        //this.taskRepository.deleteById(id);
+        this.taskRepository.deleteById(id);
     }
 
     public TaskDto createTask(TaskDto taskDto) {
