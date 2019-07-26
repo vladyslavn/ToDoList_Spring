@@ -1,5 +1,6 @@
 package com.todo.some.task;
 
+import com.todo.some.list.ListOfTask;
 import com.todo.some.list.ListRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +19,16 @@ public class TaskService {
     }
 
     public List<TaskDto> getTasksDtoByListId(int listId) {
-        return this.taskRepository.findByParentId(listId)
+        ListOfTask list = listRepository.findById(listId)
+                .orElse(new ListOfTask());
+        return this.taskRepository.findByList(list)
                 .stream()
                 .map(this :: fromTaskToTaskDto)
                 .collect(Collectors.toList());
     }
 
     public void deleteTaskById(int id) {
-        this.taskRepository.deleteById(id);
+        //this.taskRepository.deleteById(id);
     }
 
     public TaskDto createTask(TaskDto taskDto) {
@@ -43,7 +46,9 @@ public class TaskService {
     private Task fromTaskDtoToTask(TaskDto taskDto) {
         Task task = new Task();
         task.setId(taskDto.getId());
-        task.setParentId(taskDto.getListId());
+        ListOfTask list = listRepository.findById(taskDto.getListId())
+                .orElse(new ListOfTask());
+        task.setList(list);
         task.setName(taskDto.getName());
         task.setDone(taskDto.isDone());
         return task;
@@ -52,7 +57,7 @@ public class TaskService {
     private TaskDto fromTaskToTaskDto(Task task) {
         TaskDto taskDto = new TaskDto();
         taskDto.setId(task.getId());
-        taskDto.setListId(task.getParentId());
+        taskDto.setListId(task.getList().getId());
         taskDto.setName(task.getName());
         taskDto.setDone(task.getDone());
         return taskDto;

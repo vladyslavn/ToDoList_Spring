@@ -1,5 +1,7 @@
 package com.todo.some.task;
 
+import com.todo.some.list.ListOfTask;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,8 +11,9 @@ public class Task {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private int id;
 
-    @Column
-    private int parentId;
+    @ManyToOne
+    @JoinColumn(name = "list")
+    private ListOfTask list;
 
     @Column
     private String name;
@@ -25,14 +28,6 @@ public class Task {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
     }
 
     public String getName() {
@@ -50,5 +45,13 @@ public class Task {
 
     public void setDone(Boolean done) {
         this.done = done;
+    }
+
+    public ListOfTask getList() {
+        return list;
+    }
+
+    public void setList(ListOfTask list) {
+        this.list = list;
     }
 }

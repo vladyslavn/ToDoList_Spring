@@ -1,11 +1,12 @@
 package com.todo.some.task;
 
+import com.todo.some.list.ListOfTask;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TaskRepository extends JpaRepository<Task, Integer> {
+public interface TaskRepository extends JpaRepository<Task, ListOfTask> {
 
-    List<Task> findByParentId(int id);
+    List<Task> findByList(ListOfTask list);
 
 }
